@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+/* register screen*/
+.register_form {
+  display: flex;
+  border: solid black 0.2rem;
+  margin: 0 auto;
+  height: 100%;
+  width: 30rem;
+}
+.formContent {
+  display: flex;
+  flex-direction: column;
+  margin: 0 2.5rem .5rem 0;
+  width: 100%;
+}
+.formContent ul li{
+  list-style: none;
+  margin: 1rem 0rem;
+}
+.formContent ul li label {
+  display: block;
+  float:left;
+  margin-bottom:.5rem;
+}
+input {
+  width: 100%;;
+  height: 2rem;
+  border: .1rem #c0c0c0 solid;
+  border-radius: .5rem;
+}
