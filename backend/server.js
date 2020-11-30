@@ -6,11 +6,11 @@ import userRouter from './routers/userRouter.js';
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-mongoose.connect('mongodb://localhost/rewardcard', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-})
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/amazona', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
 app.use('/api/users', userRouter);
 const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, '/frontend/build')));
