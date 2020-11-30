@@ -2,7 +2,6 @@
   "name": "rewardcard",
   "type": "module",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "dependencies": {
     "express": "^4.17.1",
@@ -22,5 +21,14 @@
     "npm": "6.9.0"
   },
   "author": "William Fu",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fulei888/rewardcard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fulei888/rewardcard/issues"
+  },
+  "homepage": "https://github.com/fulei888/rewardcard#readme",
+  "description": ""
 }
