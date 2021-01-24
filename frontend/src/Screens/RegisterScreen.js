@@ -1,46 +1,86 @@
-import React, {useState} from 'react';
-import { useDispatch } from 'react-redux';
-import {registerInfo} from '../Actions/registerAction';
-
-const RegisterScreen = () => {
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import {register} from '../Actions/userAction';
+const RegisterScreen =(props) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState(0);
-    const [points, setPoint] = useState(0);
-    const dispatch = useDispatch();
-    const submitHandler = (event) => {
-        event.preventDefault();
-        dispatch(registerInfo(name, email, phoneNumber, points));
+    const [passwordError, setPasswordError] = useState(false);
+    const [password, setPassword] = useState('');
+    const [repassword, setRepassword] = useState('');
+    const userRegister = useSelector(state=>state.userRegister);
+    const {loading, error} = userRegister;
+    const userSignin = useSelector(state=>state.userSignin);
+    const {userInfo} = userSignin;
+    console.log("register userInfo",userInfo);
+    const dispatch  = useDispatch();
+    const redirect = props.location.search ? props.location.search.split("=")[1]:'/';
+    useEffect(
+       () => {
+           console.log("register", userInfo);
+        if (userInfo){
+            props.history.push(redirect);
+        }
+    }, [userInfo]);
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        if (password === repassword) {
+            dispatch(register(name, email, password));
+        }
+        else {
+            setPasswordError(true);
+        }
     }
-    return (
-        <div className ="register_form">
-            
-            <form onSubmit = {submitHandler} className = "formContent">
-                <ul> 
-                    <li> <h4>Register Infor</h4></li>
-                    <li>
-                        <label>Name</label>
-                        <input type="text" name = "name" onChange = {e => setName(e.target.value)} />
-                        <br />
-                    </li>
-                    <li>
-                        <label>Email</label>
-                        <input type="email" name = "email" onChange = {e => setEmail(e.target.value)} />
-                    </li>
-                    <li>
-                        <label>Phone Number</label>
-                        <input type="number" name = "phone_number" onChange = {e => setPhoneNumber(e.target.value)} />
-                    </li>   
-                    <li>
-                        <label>Total Point</label>
-                        <input type="number" name = "point" onChange = {e => setPoint(e.target.value)} />
-                    </li>  
-                    <li>
-                        <input type="submit" value="submit" />
-                    </li>
-                </ul>
-            </form>
-        </div>
-    )
+    return <div className="form">
+        <form onSubmit ={submitHandler} >
+            <ul className="form-container">
+                <li>
+                    <h2>Create A Account</h2>
+                </li>
+                <li>
+                    {loading && <div>loading</div>}
+                    {error && <div>{error}</div>}
+                    {passwordError&& <div>Passwords do not match</div>}
+                </li>
+                <li>
+                    <label htmlFor="name">
+                        Name
+                    </label>
+                    <input type="name" name = "name" id="name" 
+                    onChange={(e) => setName(e.target.value)}>
+                    </input>
+                </li>
+                <li>
+                    <label htmlFor="email">
+                        Email
+                    </label>
+                    <input type="email" name = "email" id="email" 
+                    onChange={(e) => setEmail(e.target.value)}>
+                    </input>
+                </li>
+                <li>
+                    <label htmlFor = "password">Password</label>
+                    <input type="password" id="password" name="password"
+                    onChange={(e) => setPassword(e.target.value)}></input>
+                </li>
+                <li>
+                    <label htmlFor = "repassword">Password</label>
+                    <input type="repassword" id="repassword" name="repassword"
+                    onChange={(e) => setRepassword(e.target.value)}></input>
+                </li>
+                <li>
+                    <button type="submit" className="button primary">Register</button>
+                </li>
+                <li>
+                    Already have an account? 
+                    <Link to ={redirect === "/"? "signin": "signin?redirect="+ redirect} className="button secondary full-width">Create your amazona account</Link>
+
+                </li>
+               
+
+            </ul>
+        </form>
+    </div>
 }
 export default RegisterScreen;
