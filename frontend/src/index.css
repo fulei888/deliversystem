@@ -203,13 +203,20 @@ input {
 }
 .ordersScreen{
   display: flex;
-  text-align: center;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 .cartScreen{
   display: flex;
-  text-align: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+.cartScreen > div > button {
+  display:flex;
+  padding:.3rem .8rem;
+  margin-bottom: 1rem;
 }
 
 .dropdown{
@@ -231,6 +238,61 @@ input {
 .dropdown:hover .dropdown-content{
   display: block;
 }
-.dropdown-content > li:first-child{
+.dropdown-content > li{
     margin-bottom: 1rem;
+}
+
+.yourTickets {
+  display: flex;
+  flex-direction: column;
+  width:80%;
+  margin: 0 auto;
+}
+.yourTickets > button {
+  width:30%;
+  height: 2rem;
+  margin-bottom:1rem;
+}
+.requestTicketsScreen {
+  display:flex;
+  flex-direction: column;
+  width:80%;
+  margin: 0 auto;
+}
+.requestTicketsScreen .deliverImage {
+  width:5rem;
+}
+.uploadImageScreen {
+  display:flex;
+  flex-direction: column;
+  margin:0 auto;
+  width:80%;
+}
+.uploadImageScreen img {
+  width:15rem;
+}
+.uploadImageScreen button {
+  margin-top:2rem;
+}
+.uploadImageScreen input {
+ display:flex;
+ width:80%;
+ height: 1.5rem;
+ padding: .8rem;
+ font-size:1rem;
+}
+.uploadImageScreen label {
+  display:flex;
+  margin-bottom:1rem;
+  margin-left:.5rem;
+  font-size: 1rem;
+ 
+}
+.uploadImageScreen button {
+  display: flex;
+  padding:1rem;
+  font-size: 1rem;
+}
+.PopupModalImage {
+  width:100%;
 }

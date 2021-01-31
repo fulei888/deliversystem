@@ -26,9 +26,9 @@ const YourTicketsScreen = (props) => {
         dispatch(getYourTickets())
     },[])
     return (
-        <div>
-            <button onClick = {() => setClearReject(true)}>Clear Rejected Order</button>
+        <div className="yourTickets">
             <h1>Your Tickets</h1>
+            <button onClick = {() => setClearReject(true)}>Clear Rejected Order</button>
              {!yourtickets&& <p> Loading </p>}
           {yourtickets &&
            <table>

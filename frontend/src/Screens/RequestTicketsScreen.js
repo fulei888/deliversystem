@@ -13,7 +13,8 @@ const RequestTickestsScreen = () => {
     },[])
     
     return (
-        <div>
+        <div className="requestTicketsScreen">
+            <h2>All Tickets</h2>
             <table>
                 <thead>
                     <tr>

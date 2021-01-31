@@ -8,9 +8,17 @@ const OrdersScreen = (props) => {
     const {userInfo} = userSignin
     const allOrders = useSelector(state => state.allOrderList);
     const {allOrderList} = allOrders;
+    const cart = useSelector(state=> state.cart);
+    let { cartItems } = cart;
     const takeHandler = (orderId) => {
         if(userInfo) {
             console.log("www call take handler get your tickets");
+            // if(cartItems.length>0) {
+            //     window.alert("You have to submit the ticket in you cart and then you can add another order in your cart");
+            // }
+            // else {
+            // dispatch(getYourTickets(props.history, orderId));
+            // }
             dispatch(getYourTickets(props.history, orderId));
         }
         else{
@@ -24,6 +32,7 @@ const OrdersScreen = (props) => {
 
     return (
         <div className="ordersScreen">
+            <h2>All Orders</h2>
             <table>
                 <thead>
                     <tr>

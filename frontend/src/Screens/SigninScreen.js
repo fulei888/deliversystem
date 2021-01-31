@@ -9,6 +9,8 @@ const SigninScreen =(props) => {
     const {loading, userInfo, error} = userSignin;
     const allYourTickets = useSelector(state => state.getYourTickets)
     const {yourtickets} = allYourTickets
+    const cart = useSelector(state=> state.cart);
+    let { cartItems } = cart;
     const dispatch  = useDispatch();
     const redirect = props.location.search?props.location.search.split("=")[1]:'/';
     useEffect(
@@ -34,6 +36,10 @@ const SigninScreen =(props) => {
             else if (ticket && ticket.status == "ACCEPT") {
                 window.alert("You already have the ticket and it passed the check. You can delver it now")
                 props.history.push('/');
+            }
+            else if(cartItems.length>0){
+                window.alert("You have to submit the ticket in you cart and then you can add another order in your cart");
+                props.history.push("/");
             }
             else {
                 props.history.push(redirect);

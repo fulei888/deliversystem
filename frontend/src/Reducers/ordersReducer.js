@@ -1,4 +1,4 @@
-import {ORDERSLIST_REQUEST, ORDERSLIST_SUCCESS,ORDERSLIST_FAIL, GET_ALL_ORDER_LIST_REQUEST, GET_ALL_ORDER_LIST_SUCCESS, GET_ALL_ORDER_LIST_FAIL, CART_ADD_ITEM, CART_REMOVE_ITEM, PLACE_ORDERS_REQUEST, PLACE_ORDERS_SUCCESS, PLACE_ORDERS_FAIL, GET_TICKETS_SUCCESS, GET_TICKETS_REQUEST, GET_TICKETS_FAIL, GET_YOUR_TICKETS_REQUEST, GET_YOUR_TICKETS_SUCCESS, GET_YOUR_TICKETS_FAIL, ACCEPT_ORDER_REQUEST, ACCEPT_ORDER_SUCCESS, ACCEPT_ORDER_FAIL, REJECT_ORDER_REQUEST, REJECT_ORDER_SUCCESS, REJECT_ORDER_FAIL, GET_STATUS_FAIL, GET_STATUS_SUCCESS, GET_STATUS_REQUEST, EMPTY_CART, REMOVE_YOUR_REJECTED_TICKETS_FAIL, REMOVE_YOUR_REJECTED_TICKETS_SUCCESS, REMOVE_YOUR_REJECTED_TICKETS_REQUEST, RELEASE_ORDER_REQUEST, RELEASE_ORDER_SUCCESS, RELEASE_ORDER_FAIL, GET_IMAGEPATH_REQUEST, GET_IMAGEPATH_SUCCESS, GET_IMAGEPATH_FAIL, UPDATE_IMAGEPATH_SUCCESS, UPDATE_IMAGEPATH_FAIL, DELIVER_SUCCESS_REQUEST, DELIVER_SUCCESS_SUCCESS, DELIVER_SUCCESS_FAIL} from '../Constant/ordersConstant';
+import {ORDERSLIST_REQUEST, ORDERSLIST_SUCCESS,ORDERSLIST_FAIL, GET_ALL_ORDER_LIST_REQUEST, GET_ALL_ORDER_LIST_SUCCESS, GET_ALL_ORDER_LIST_FAIL, CART_ADD_ITEM, CART_REMOVE_ITEM, PLACE_ORDERS_REQUEST, PLACE_ORDERS_SUCCESS, PLACE_ORDERS_FAIL, GET_TICKETS_SUCCESS, GET_TICKETS_REQUEST, GET_TICKETS_FAIL, GET_YOUR_TICKETS_REQUEST, GET_YOUR_TICKETS_SUCCESS, GET_YOUR_TICKETS_FAIL, ACCEPT_ORDER_REQUEST, ACCEPT_ORDER_SUCCESS, ACCEPT_ORDER_FAIL, REJECT_ORDER_REQUEST, REJECT_ORDER_SUCCESS, REJECT_ORDER_FAIL, GET_STATUS_FAIL, GET_STATUS_SUCCESS, GET_STATUS_REQUEST, EMPTY_CART, REMOVE_YOUR_REJECTED_TICKETS_FAIL, REMOVE_YOUR_REJECTED_TICKETS_SUCCESS, REMOVE_YOUR_REJECTED_TICKETS_REQUEST, RELEASE_ORDER_REQUEST, RELEASE_ORDER_SUCCESS, RELEASE_ORDER_FAIL, GET_IMAGEPATH_REQUEST, GET_IMAGEPATH_SUCCESS, GET_IMAGEPATH_FAIL, UPDATE_IMAGEPATH_SUCCESS, UPDATE_IMAGEPATH_FAIL, DELIVER_SUCCESS_REQUEST, DELIVER_SUCCESS_SUCCESS, DELIVER_SUCCESS_FAIL, DELETE_ORDER_REQUEST, DELETE_ORDER_SUCCESS, DELETE_ORDER_FAIL} from '../Constant/ordersConstant';
 
 const orderCreateReducer = (state={}, action) =>{
     switch (action.type) {
@@ -37,6 +37,7 @@ const cartReducer = (state = {cartItems:[]}, action) => {
                     state.cartItems.map(x => x.orderId === order.orderId? item: x)
                 };
                 }
+                
                 return { cartItems: [...state.cartItems, item]};
 
         case CART_REMOVE_ITEM:
@@ -107,7 +108,7 @@ const acceptTicketesReducer = (state={}, action) => {
         case ACCEPT_ORDER_REQUEST:
             return {loading: true, success: false}
         case ACCEPT_ORDER_SUCCESS:
-            return {loading: false, success: true, yourticketsAfterAccept: action.payload}
+            return {loading: false, success: true, allTicketsAfterAccept: action.payload}
         case ACCEPT_ORDER_FAIL:
             return {loading: false, success: false, error: action.payload}
         default: return state;
@@ -118,12 +119,24 @@ const rejectTicketesReducer = (state={}, action) => {
         case REJECT_ORDER_REQUEST:
             return {loading: true, success: false}
         case REJECT_ORDER_SUCCESS:
-            return {loading: false, success: true, yourticketsAfterAccept: action.payload}
+            return {loading: false, success: true, allTicketsAfterAccept: action.payload}
         case REJECT_ORDER_FAIL:
             return {loading: false, success: false, error: action.payload}
         default: return state;
     }
 }
+const deleteTicketesReducer = (state={}, action) => {
+    switch(action.type) {
+        case DELETE_ORDER_REQUEST:
+            return {loading: true, success: false}
+        case DELETE_ORDER_SUCCESS:
+            return {loading: false, success: true, allTicketsAfteDelete: action.payload}
+        case DELETE_ORDER_FAIL:
+            return {loading: false, success: false, error: action.payload}
+        default: return state;
+    }
+}
+
 
 const deliverSuccessReducer = (state={}, action) => {
     switch(action.type) {
@@ -182,13 +195,19 @@ const getStatusReducer = (state={ticketsStatus:{}}, action) => {
                 console.log('inside state.ticketsStatus', state.ticketsStatus);
             }
                console.log("out side state.ticketsStatus",state.ticketsStatus);
-            return {loading: false, success: true, william:77,ticketsStatus: state.ticketsStatus}
+            return {loading: false, success: true, ticketsStatus: state.ticketsStatus}
+        case DELETE_ORDER_SUCCESS:
+            const user_OrderId = action.userOrderId;
+            delete state.ticketsStatus[user_OrderId];
+            return {ticketsStatus: state.ticketsStatus}
+        
         case GET_STATUS_FAIL:
             return {loading: false, success: false, error: action.payload}
         default: return state;
     }
 }
 export {
+    deleteTicketesReducer,
     deliverSuccessReducer,
     imagePathReducer,
     releaseTicketesReducer,

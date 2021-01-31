@@ -57,6 +57,7 @@ const DataScreen = React.memo(() => {
     
     return (
         <div className="product-list">
+            <h2>All Users</h2>
             <div className="editForm">
                 {modalVisable && 
                 <form onSubmit ={submitHanlder}>

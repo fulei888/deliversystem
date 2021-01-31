@@ -2,7 +2,7 @@ import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import Cookie from 'js-cookie';
 import {userSigninReducer,userListReducer, userDeleteReducer, userSaveReducer, userRegisterReducer} from './Reducers/userReducer';
-import { orderCreateReducer, allOrderListReducer, cartReducer, placeOrdersReducer, getTicketsReducer, getYourTicketsReducer, acceptTicketesReducer, rejectTicketesReducer, getStatusReducer, removeYourRejectedTicketsReducer, imagePathReducer, deliverSuccessReducer } from './Reducers/ordersReducer';
+import { orderCreateReducer, allOrderListReducer, cartReducer, placeOrdersReducer, getTicketsReducer, getYourTicketsReducer, acceptTicketesReducer, rejectTicketesReducer, getStatusReducer, removeYourRejectedTicketsReducer, imagePathReducer, deliverSuccessReducer, deleteTicketesReducer } from './Reducers/ordersReducer';
 
 const cartItems = Cookie.getJSON("cartItems_delivery")|| [];
 const userInfo = Cookie.getJSON("userInfo") || null;
@@ -25,7 +25,8 @@ const reducer = combineReducers({
     getStatus: getStatusReducer,
     leftTickets: removeYourRejectedTicketsReducer,
     imagePath: imagePathReducer,
-    deliverSuccess:deliverSuccessReducer
+    deliverSuccess:deliverSuccessReducer,
+    yourTicketsAfterDelete:deleteTicketesReducer
 })
 const copmposeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, initialState,copmposeEnhancer(applyMiddleware(thunk)));

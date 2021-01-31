@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import Cookie from "js-cookie";
-import {ORDERSLIST_REQUEST, ORDERSLIST_SUCCESS,ORDERSLIST_FAIL, GET_ALL_ORDER_LIST_REQUEST, GET_ALL_ORDER_LIST_SUCCESS, GET_ALL_ORDER_LIST_FAIL, CART_ADD_ITEM, CART_FAIL, CART_REMOVE_ITEM, PLACE_ORDERS_REQUEST, PLACE_ORDERS_SUCCESS, PLACE_ORDERS_FAIL, GET_TICKETS_REQUEST, GET_TICKETS_SUCCESS, GET_TICKETS_FAIL, GET_YOUR_TICKETS_REQUEST, GET_YOUR_TICKETS_SUCCESS, GET_YOUR_TICKETS_FAIL, ACCEPT_ORDER_REQUEST, ACCEPT_ORDER_SUCCESS, ACCEPT_ORDER_FAIL, REJECT_ORDER_FAIL, REJECT_ORDER_SUCCESS, REJECT_ORDER_REQUEST, GET_STATUS_FAIL, GET_STATUS_SUCCESS, GET_STATUS_REQUEST, EMPTY_CART, REMOVE_YOUR_REJECTED_TICKETS_FAIL, REMOVE_YOUR_REJECTED_TICKETS_SUCCESS, REMOVE_YOUR_REJECTED_TICKETS_REQUEST, RELEASE_ORDER_REQUEST, RELEASE_ORDER_SUCCESS, RELEASE_ORDER_FAIL, UPDATE_IMAGEPATH_FAIL, UPDATE_IMAGEPATH_SUCCESS, GET_IMAGEPATH_SUCCESS, GET_IMAGEPATH_FAIL, GET_IMAGEPATH_REQUEST, DELIVER_SUCCESS_REQUEST, DELIVER_SUCCESS_SUCCESS, DELIVER_SUCCESS_FAIL} from '../Constant/ordersConstant';
+import {ORDERSLIST_REQUEST, ORDERSLIST_SUCCESS,ORDERSLIST_FAIL, GET_ALL_ORDER_LIST_REQUEST, GET_ALL_ORDER_LIST_SUCCESS, GET_ALL_ORDER_LIST_FAIL, CART_ADD_ITEM, CART_FAIL, CART_REMOVE_ITEM, PLACE_ORDERS_REQUEST, PLACE_ORDERS_SUCCESS, PLACE_ORDERS_FAIL, GET_TICKETS_REQUEST, GET_TICKETS_SUCCESS, GET_TICKETS_FAIL, GET_YOUR_TICKETS_REQUEST, GET_YOUR_TICKETS_SUCCESS, GET_YOUR_TICKETS_FAIL, ACCEPT_ORDER_REQUEST, ACCEPT_ORDER_SUCCESS, ACCEPT_ORDER_FAIL, REJECT_ORDER_FAIL, REJECT_ORDER_SUCCESS, REJECT_ORDER_REQUEST, GET_STATUS_FAIL, GET_STATUS_SUCCESS, GET_STATUS_REQUEST, EMPTY_CART, REMOVE_YOUR_REJECTED_TICKETS_FAIL, REMOVE_YOUR_REJECTED_TICKETS_SUCCESS, REMOVE_YOUR_REJECTED_TICKETS_REQUEST, RELEASE_ORDER_REQUEST, RELEASE_ORDER_SUCCESS, RELEASE_ORDER_FAIL, UPDATE_IMAGEPATH_FAIL, UPDATE_IMAGEPATH_SUCCESS, GET_IMAGEPATH_SUCCESS, GET_IMAGEPATH_FAIL, GET_IMAGEPATH_REQUEST, DELIVER_SUCCESS_REQUEST, DELIVER_SUCCESS_SUCCESS, DELIVER_SUCCESS_FAIL, DELETE_ORDER_REQUEST, DELETE_ORDER_SUCCESS, DELETE_ORDER_FAIL} from '../Constant/ordersConstant';
 export const ordersCreate = (infor) => dispatch =>{
 
     dispatch({
@@ -55,10 +55,18 @@ export const placeOrders = (infor, router) => (dispatch, getState) => {
     )
     .then(
         response => {
-            router.push('/yourtickets')
+           
             const {data} = response;
             console.log("personal order datat",data);
             dispatch({type: PLACE_ORDERS_SUCCESS, paylaod: data})
+            if(data.repeated){
+                window.alert("Your ticket was taken by others");
+                Cookie.remove("cartItems_delivery");
+                router.push('/')
+            }
+            else {
+                router.push('/yourtickets')
+            }
 
         }
     )
@@ -78,21 +86,23 @@ export const addToCart = (orderId) => (dispatch, getState) => {
     })
     .then(
         response => {
-            const {cart: {cartItems}} = getState();
+           // const {cart: {cartItems}} = getState();
             const {data} = response;
-            console.log("add to cart data", data);
+           // console.log("add to cart data", data);
+            //console.log("cqqq artItems",cartItems);
+            const cartItems = {
+                orderId: data._id,
+                state: data.state,
+                city: data.city,
+                street: data.street,
+                ordernumber: data.ordernumber,
+                product: data.product,
+                date: data.updatedAt
+            }
             dispatch({
-                type: CART_ADD_ITEM, payload: {
-                    orderId: data._id,
-                    state: data.state,
-                    city: data.city,
-                    street: data.street,
-                    ordernumber: data.ordernumber,
-                    product: data.product,
-                    date: data.updatedAt
-                }
+                type: CART_ADD_ITEM, payload: cartItems
             })
-             Cookie.set("cartItems_delivery", JSON.stringify(cartItems));
+             Cookie.set("cartItems_delivery", JSON.stringify([cartItems]));
           
         }
         
@@ -189,7 +199,7 @@ export const acceptOrder = (userId, orderId) =>(dispatch, getState) => {
             console.log("accept data", data)
             dispatch({type:ACCEPT_ORDER_SUCCESS, payload: data})
             dispatch(getStatus(userId, orderId))
-            Cookie.set("getAllTickets", JSON.stringify(data));
+          
         }
     )
     .catch( error => dispatch({type: ACCEPT_ORDER_FAIL, payload: error.message}))
@@ -211,11 +221,33 @@ export const rejectOrder = (userId, orderId) =>(dispatch, getState) => {
             const {data} = response;
             dispatch({type:REJECT_ORDER_SUCCESS, payload: data})
             dispatch(getStatus(userId, orderId))
-            Cookie.set("getAllTickets", JSON.stringify(data));
+           
         }
     )
     .catch( error => dispatch({type: REJECT_ORDER_FAIL, payload: error.message}))
 }
+
+export const deleteOrder = (userId, orderId) =>(dispatch, getState) => {
+    const {userSignin:{userInfo}} = getState();
+    dispatch({type:DELETE_ORDER_REQUEST});
+    
+    Axios.put("/api/orders/deleteorder/"+userId, {orderId},
+    {
+        headers: {
+            Authorization: "william "+userInfo.token
+        }
+    }
+    )
+    .then(
+        response => {
+            const {data} = response;
+            dispatch({type:DELETE_ORDER_SUCCESS, payload: data, userOrderId:`${userId}_${orderId}`})
+        }
+    )
+    .catch( error => dispatch({type: DELETE_ORDER_FAIL, payload: error.message}))
+}
+
+
 
 export const releaseOrder = (userId, orderId) =>(dispatch, getState) => {
     const {userSignin:{userInfo}} = getState();
@@ -233,7 +265,6 @@ export const releaseOrder = (userId, orderId) =>(dispatch, getState) => {
             const {data} = response;
             dispatch({type:RELEASE_ORDER_SUCCESS, payload: data})
             dispatch(getStatus(userId, orderId))
-            Cookie.set("getAllTickets", JSON.stringify(data));
             console.log("releaseOrder", data)
         }
     )
@@ -322,6 +353,7 @@ export const deliverSuccess =(orderId)=> (dispatch, getState) => {
         response => {
             const {data} = response;
             dispatch({type:DELIVER_SUCCESS_SUCCESS, payload: data})
+            dispatch(getStatus(userInfo._id, orderId))
           
         }
     )

@@ -32,8 +32,11 @@ function App(props) {
           </div>
           <div className = "header-links">
           {userInfo&&
-          <Link to = "/cart">Cart</Link>}
-          &nbsp;&nbsp;&nbsp;&nbsp;
+           <Link to = "/">Home</Link>}
+            &nbsp;&nbsp;&nbsp;&nbsp;
+          {userInfo &&
+            <Link to = "/cart">Cart</Link>}
+            &nbsp;&nbsp;&nbsp;&nbsp;
 
           {userInfo?  userInfo&&userInfo.isAdmin?
           <span className="dropdown">
@@ -41,8 +44,8 @@ function App(props) {
         <ul className="dropdown-content">
             <li><Link to = "/tickets">Requested Tickets</Link></li>
             <li><Link to = "/data">Users Management</Link></li>
-            <li onClick = {logoutHandler}><Link to="/signin">Logout</Link></li>
             <li><Link to ="/createorders">Create Orders</Link></li>
+            <li onClick = {logoutHandler}><Link to="/signin">Logout</Link></li>
         </ul>
         </span>
           :<span className="dropdown">

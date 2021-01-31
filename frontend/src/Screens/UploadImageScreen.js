@@ -66,20 +66,23 @@ const UploadImageScreen = (props) => {
 
     return (
        <Fragment>
+           <div className="uploadImageScreen">
             {successDeliver&&<div>Your photo get sent to the server successfully</div>}
-        {!image?<div>Loading</div>: <div><img src={image} alt="delivered photo" />
-            <label htmlFor ="imageFile">Image File</label>
-            <input
-                type ="file"
-                id="imageFile"
-                label="Choose Image"
-                onChange={uploadFileHandler}
-                />
-                {loadingUpload && <div>Loading</div>}
-                {errorUpload && <div>error upload</div>}
-                <button onClick={deliverSuccessHandler}>Delivered Successfully</button>
+            {!image?<div>Loading</div>: 
+            <div><img src={image} alt="delivered photo" />
+                <label htmlFor ="imageFile">Image File</label>
+                <input
+                    type ="file"
+                    id="imageFile"
+                    label="Choose Image"
+                    onChange={uploadFileHandler}
+                    />
+                    {loadingUpload && <div>Loading</div>}
+                    {errorUpload && <div>error upload</div>}
+                    <button onClick={deliverSuccessHandler}>Delivered Successfully</button>
             </div>
-        }
+            }
+        </div>
         </Fragment>
             
     )
