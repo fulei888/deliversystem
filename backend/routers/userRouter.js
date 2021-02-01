@@ -1,6 +1,6 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
-
+import bcrypt from 'bcryptjs';
 import Users from '../models/usersModel.js';
 import { getToken, isAuth, isAdmin } from '../util.js';
 const userRouter = express.Router();
@@ -9,7 +9,7 @@ userRouter.get("/createadmin", expressAsyncHandler(async(req,res)=> {
       const user = new Users({
         name: 'william',
         email: 'william@gmail.com',
-        password: 'password',
+        password: bcrypt.hashSync('password',8),
         isAdmin:true
       });
       const newUser = await user.save();
