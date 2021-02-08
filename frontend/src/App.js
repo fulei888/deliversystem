@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import PayDeliveryScreen from './Screens/PayDelivery';
 import RegisterScreen from './Screens/RegisterScreen';
 import DataScreen from './Screens/DataScreen';
 import SigninScreen from './Screens/SigninScreen';
@@ -45,6 +46,7 @@ function App(props) {
             <li><Link to = "/tickets">Requested Tickets</Link></li>
             <li><Link to = "/data">Users Management</Link></li>
             <li><Link to ="/createorders">Create Orders</Link></li>
+            <li><Link to ="/paydelivery">Pay Delivery</Link></li>
             <li onClick = {logoutHandler}><Link to="/signin">Logout</Link></li>
         </ul>
         </span>
@@ -61,6 +63,7 @@ function App(props) {
         </header>
         <main className="main">
           <Switch>
+          <Route path="/paydelivery" exact component={PayDeliveryScreen} />
           <Route path="/uploadimage/:id" exact component={UploadImageScreen} />
           <Route path="/yourtickets" exact component={YourTicketsScreen} />
           <Route path="/tickets" exact component={RequestTickestsScreen} />

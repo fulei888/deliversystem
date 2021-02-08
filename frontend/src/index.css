@@ -296,3 +296,9 @@ input {
 .PopupModalImage {
   width:100%;
 }
+
+.payDelivery{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
