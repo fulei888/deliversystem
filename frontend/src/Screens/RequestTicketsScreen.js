@@ -37,7 +37,7 @@ const RequestTickestsScreen = () => {
                             key = {order._id+'Loren'}
                             city = {order.city}
                             orderId = {order.orderId}
-                            date = {order.date}
+                            date = {order.date.substring(0,10)}
                             product = {order.product}
                             status = {order.status}
                             imagePath= {order.imagePath}

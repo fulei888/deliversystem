@@ -131,7 +131,7 @@ const DataScreen = React.memo(() => {
                         <td>{user.name}</td>
                         <td>{user.email}</td>
                         <td>{user.password}</td>
-                        <td>{user.updatedAt}</td>
+                        <td>{user.updatedAt.substring(0,10)}</td>
                         <td>
                         <button onClick={()=>openModal(user)}>Edit</button>
                         <button onClick={()=>deletHandler(user)}>Delete</button>

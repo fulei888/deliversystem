@@ -8,12 +8,13 @@ export const signin = (email, password) => async (dispatch) => {
         const {data} = await Axios.post("/api/user/signin", {email, password})
         dispatch({type: USER_SIGNIN_SUCCESS, payload: data});
         dispatch(getYourTickets());
-        Cookie.set('userInfo', JSON.stringify(data));
+        Cookie.set('userInfo', JSON.stringify(data), {expires: 0.1});
     }
     catch (error) {
         dispatch({type: USER_SIGNIN_FAIL, payload: error.message});
     }
 }
+
 export const logout = () => async(dispatch) => {
     Cookie.remove('userInfo');
    // Cookie.remove('getTicketsStatus');
@@ -84,11 +85,11 @@ export const saveUser = (user) => (dispatch, getState) => {
     })
 }
 
-export const register = (name, email, password) => async dispatch => {
+export const register = (name, email, password,street,city,state,cardNumber) => async dispatch => {
     console.log("comming");
-    dispatch({type: USER_REGISTER_REQUEST, payload: {name, email, password}});
+    dispatch({type: USER_REGISTER_REQUEST, payload: {name, email, password,street,city,state,cardNumber}});
     try{
-        const {data} = await Axios.post("/api/user/register", {name,email, password})
+        const {data} = await Axios.post("/api/user/register", {name, email, password,street,city,state,cardNumber})
         console.log("action data", data);
         dispatch({type: USER_REGISTER_SUCCESS, payload: data});
         dispatch(signin(email,password));

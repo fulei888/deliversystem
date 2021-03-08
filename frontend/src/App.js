@@ -13,6 +13,8 @@ import {logout} from './Actions/userAction';
 import RequestTickestsScreen from './Screens/RequestTicketsScreen';
 import YourTicketsScreen from './Screens/YourTicketsScreen';
 import UploadImageScreen from './Screens/UploadImageScreen';
+import { useEffect } from 'react';
+import PersonalPofile from './Screens/PersonalPofile';
 function App(props) {
   const userSignin = useSelector(state=>state.userSignin);
   const {userInfo} = userSignin;
@@ -23,6 +25,9 @@ function App(props) {
     console.log("logoutHandler",props);
     dispatch(logout());
   }
+  useEffect(()=>{
+    
+  },[])
   return (
     <BrowserRouter>
     <div className="App">
@@ -32,14 +37,14 @@ function App(props) {
           <Link to ="/">Delivery System</Link>
           </div>
           <div className = "header-links">
-          {userInfo&&
+          {userInfo&& userInfo.token &&
            <Link to = "/">Home</Link>}
             &nbsp;&nbsp;&nbsp;&nbsp;
-          {userInfo &&
+          {userInfo && userInfo.token &&
             <Link to = "/cart">Cart</Link>}
             &nbsp;&nbsp;&nbsp;&nbsp;
 
-          {userInfo?  userInfo&&userInfo.isAdmin?
+          {userInfo && userInfo.token?  userInfo&&userInfo.isAdmin?
           <span className="dropdown">
           <Link to="/profile">Admin</Link>
         <ul className="dropdown-content">
@@ -63,6 +68,7 @@ function App(props) {
         </header>
         <main className="main">
           <Switch>
+          <Route path="/profile" exact component={PersonalPofile} />
           <Route path="/paydelivery" exact component={PayDeliveryScreen} />
           <Route path="/uploadimage/:id" exact component={UploadImageScreen} />
           <Route path="/yourtickets" exact component={YourTicketsScreen} />

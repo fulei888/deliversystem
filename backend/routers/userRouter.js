@@ -28,12 +28,17 @@ const signinUser = await Users.findOne({
     email: req.body.email,
     password: req.body.password
   });
+  console.log("signinUser",signinUser);
   if (signinUser) {
     res.send({
       _id: signinUser.id,
       name: signinUser.name,
       email: signinUser.email,
       isAdmin: signinUser.isAdmin,
+      street: signinUser.street,
+      city: signinUser.city,
+      state: signinUser.state,
+      cardNumber: signinUser.cardNumber,
       token: getToken(signinUser)
     })
 
@@ -45,7 +50,11 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
     const user = new Users({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      street: req.body.street,
+      city: req.body.city,
+      state: req.body.state,
+      cardNumber: req.body.cardNumber
     });
     const newUser = await user.save();
     if (newUser) {
@@ -53,6 +62,10 @@ userRouter.post('/register', expressAsyncHandler(async (req, res) => {
         _id: newUser.id,
         name: newUser.name,
         email: newUser.email,
+        street: newUser.street,
+        city: newUser.city,
+        state: newUser.state,
+        cardNumber: newUser.cardNumber,
         isAdmin: newUser.isAdmin,
         token: getToken(newUser)
       })

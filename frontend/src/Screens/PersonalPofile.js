@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {register} from '../Actions/userAction';
-const RegisterScreen =(props) => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-   
+
+const  PersonalPofile = () => {
+
     const [streetError, setStreetError] = useState(false);
     const [cityError, setCityError] = useState(false);
     const [stateError, setStateError] = useState(false);
@@ -16,27 +15,34 @@ const RegisterScreen =(props) => {
     const [passwordMatchError, setPasswordMatchError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
-
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repassword, setRepassword] = useState('');
     const [street, setStreet] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
-    const [cardNumber, setCardNumber] = useState();
+    const [cardNumber, setCardNumber] = useState(1);
     const userRegister = useSelector(state=>state.userRegister);
     const {loading, error} = userRegister;
     const userSignin = useSelector(state=>state.userSignin);
     const {userInfo} = userSignin;
     console.log("register userInfo",userInfo);
     const dispatch  = useDispatch();
-    const redirect = props.location.search ? props.location.search.split("=")[1]:'/';
+  
     useEffect(
        () => {
-           console.log("register", userInfo);
-        if (userInfo){
-            props.history.push(redirect);
-        }
-    }, [userInfo]);
+        console.log("starting userInfo",userInfo);
+           if(userInfo) {
+               setStreet(userInfo.street);
+               setCity(userInfo.city);
+               setState(userInfo.state);
+               setCardNumber(userInfo.cardNumber);
+               setName(userInfo.name);
+               setEmail(userInfo.email);
+           }
+         
+    }, []);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -96,13 +102,13 @@ const RegisterScreen =(props) => {
             setCardNumberError(false);
         }
     }
-    return <div className="form">
+    return <div className="form personalProfile">
         <form onSubmit ={submitHandler} >
             <ul className="form-container">
                 <li>
-                    <h2>Create An Account</h2>
+                    <h2>Personal Information</h2>
                 </li>
-                <li>
+                <li className="errorShow">
                     {loading && <div>loading</div>}
                     {error && <div>{error}</div>}
                     {passwordMatchError&& <div>Passwords do not match</div>}
@@ -118,7 +124,7 @@ const RegisterScreen =(props) => {
                     <label htmlFor="name">
                         Name
                     </label>
-                    <input type="name" name = "name" id="name" 
+                    <input type="name" name = "name" id="name" value={name}
                     onChange={(e) => setName(e.target.value)}>
                     </input>
                 </li>
@@ -126,13 +132,13 @@ const RegisterScreen =(props) => {
                     <label htmlFor="email">
                         Email
                     </label>
-                    <input type="email" name = "email" id="email" 
+                    <input type="email" name = "email" id="email" value={email}
                     onChange={(e) => setEmail(e.target.value)}>
                     </input>
                 </li>
                 <li>
                     <label htmlFor = "password">Password</label>
-                    <input type="password" id="password" name="password"
+                    <input type="password" id="password" name="password" value={password}
                     onChange={(e) => setPassword(e.target.value)}></input>
                 </li>
                 <li>
@@ -142,24 +148,24 @@ const RegisterScreen =(props) => {
                 </li>
                 <li>
                     <label htmlFor = "cardnumber">Credit/Debit Card Number</label>
-                    <input type="number" id="cardnumber" name="cardnumber"
+                    <input type="number" id="cardnumber" name="cardnumber" value={cardNumber}
                     onChange={(e) => setCardNumber(e.target.value)}></input>
                 </li>
                 <li>
                     <label htmlFor = "street">Street</label>
-                    <input type="text" id="street" name="street"
+                    <input type="text" id="street" name="street" value={street}
                     onChange={(e) => setStreet(e.target.value)}></input>
                 </li>
                 <li>
                     <label htmlFor = "city">City</label>
-                    <input type="text" id="city" name="city"
+                    <input type="text" id="city" name="city" value={city}
                     onChange={(e) => setCity(e.target.value)}></input>
                 </li>
                 <li>
                     <label htmlFor = "state">State</label>
                     {/* <input type="text" id="state" name="state"
                     onChange={(e) => setState(e.target.value)}></input> */}
-                    <select id="state" name="state" onChange={(e) => setState(e.target.value)}>
+                    <select id="state" name="state" onChange={(e) => setState(e.target.value)} value={state}>
                         <option value="">--Please choose an option--</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -215,17 +221,15 @@ const RegisterScreen =(props) => {
                     </select>	
                 </li>
                 <li>
-                    <button type="submit" className="button primary">Register</button>
+                    <button type="submit" className="button primary">Update</button>
                 </li>
-                <li>
-                    Already have an account? 
-                    <Link to ={redirect === "/"? "signin": "signin?redirect="+ redirect} className="button secondary full-width">Sign in Your Account</Link>
-
-                </li>
+               
                
 
             </ul>
         </form>
     </div>
 }
-export default RegisterScreen;
+
+export default PersonalPofile;
+

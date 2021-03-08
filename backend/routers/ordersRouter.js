@@ -28,8 +28,82 @@ ordersRouter.post('/creatingordersList', expressAsyncHandler(async (req, res)=>{
         res.status(401).send({msg: 'Invalid Order Data'});
     }
 }))
+let prevCreatedDate = '';
 ordersRouter.get("/getallorders", expressAsyncHandler(async(req, res)=> {
-    const orders = await Orders.find().catch(e => { console.log(e) });
+   console.log('req.query', req.query);
+    const stateSearch = req.query.stateSearch 
+    ? {
+        state: {
+            $regex: req.query.stateSearch,
+            $options: 'i'
+        }
+    }
+    :{};
+    const citySearch = req.query.citySearch 
+    ? {
+        city: {
+            $regex: req.query.citySearch,
+            $options: 'i'
+        }
+    }
+    :{};
+    const streetSearch = req.query.streetSearch 
+    ? {
+        street: {
+            $regex: req.query.streetSearch,
+            $options: 'i'
+        }
+    }
+    :{};
+    const orderNumberSearch = req.query.orderNumberSearch 
+    ? {
+        ordernumber: {
+            $regex: req.query.orderNumberSearch,
+            $options: 'i'
+        }
+    }
+    :{};
+    const createdDateSearch = req.query.createdDateSearch 
+    ? {
+        updatedAt: {
+            $gte: req.query.createdDateSearch 
+        }
+    }
+    :{};
+    
+    const stateSort = (req.query.stateSortClicked=='true') 
+    ?(req.query.stateSortAscending =='true')
+    ?{state: 1}
+    :{state:-1}
+    :{};
+
+    const streetSort = (req.query.streetSortClicked=='true') 
+    ?req.query.streetSortAscending == 'true'
+    ?{street: 1}
+    :{street:-1}
+    :{};
+    const citySort = (req.query.citySortClicked == 'true') 
+    ?req.query.citySortAscending == 'true'
+    ?{city: 1}
+    :{city:-1}
+    :{};
+    const orderNumberSort = (req.query.orderNumberSortClicked == 'true') 
+    ?req.query.orderNumberSortAscending == 'true'
+    ?{ordernumber: 1}
+    :{ordernumber:-1}
+    :{};
+    const createdDateSort = (req.query.createdDateSortClicked == 'true') 
+    ?req.query.createdDateSortAscending == 'true'
+    ?{updatedAt: 1}
+    :{updatedAt:-1}
+    :{};
+   console.log('req.query',req.query);
+   console.log("all sort ", {...stateSort, ...citySort, ...streetSort, ...orderNumberSort, ...createdDateSort})
+  
+  const orders = await Orders.find({ ...stateSearch, ...citySearch, ...streetSearch, ...orderNumberSearch, ...createdDateSearch})
+    .sort({...stateSort, ...citySort, ...streetSort, ...orderNumberSort, ...createdDateSort})
+    .catch(e => { console.log(e) });
+    //console.log('orders check', orders);
     res.send(orders);
 }))
 

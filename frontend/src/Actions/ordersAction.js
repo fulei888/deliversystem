@@ -25,9 +25,51 @@ export const ordersCreate = (infor) => dispatch =>{
     })
 
 }
-export const getAllOrderList = () => dispatch => {
+export const getAllOrderList = (
+    stateSearch = '', 
+    citySearch = '', 
+    streetSearch ='',
+    orderNumberSearch ='', 
+    createdDateSearch ='',
+    stateSort, stateSortClicked, 
+    citySort, citySortClicked,
+    streetSort, streetSortClicked, 
+    orderNumberSort, orderNumberSortClicked,
+    createdDateSort, createdDateSortClicked
+     ) => dispatch => {
+    console.log("stateSort",stateSort);
     dispatch({type: GET_ALL_ORDER_LIST_REQUEST});
-    Axios.get('api/orders/getallorders')
+    Axios.get('api/orders/getallorders?stateSearch=' +
+    stateSearch +
+    '&citySearch=' +
+    citySearch +
+    '&streetSearch=' +
+    streetSearch +
+    '&orderNumberSearch=' +
+    orderNumberSearch +
+    '&createdDateSearch=' +
+    createdDateSearch +
+    '&stateSortAscending=' +
+    stateSort.ascending +
+    '&stateSortClicked=' +
+    stateSortClicked +
+    '&citySortAscending=' +
+    citySort.ascending +
+    '&citySortClicked=' +
+    citySortClicked +
+    '&streetSortAscending=' +
+    streetSort.ascending +
+    '&streetSortClicked=' +
+    streetSortClicked +
+    '&orderNumberSortAscending=' +
+    orderNumberSort.ascending +
+    '&orderNumberSortClicked=' +
+    orderNumberSortClicked +
+    '&createdDateSortAscending=' +
+    createdDateSort.ascending +
+    '&createdDateSortClicked=' +
+    createdDateSortClicked 
+    )
     .then(
         response => {
             const {data} = response;
@@ -97,7 +139,7 @@ export const addToCart = (orderId) => (dispatch, getState) => {
                 street: data.street,
                 ordernumber: data.ordernumber,
                 product: data.product,
-                date: data.updatedAt
+                date: data.updatedAt.substring(0,10)
             }
             dispatch({
                 type: CART_ADD_ITEM, payload: cartItems

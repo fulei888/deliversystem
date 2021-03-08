@@ -65,7 +65,7 @@ const YourTicketsScreen = (props) => {
                        <td>{order.street}</td>
                        <td>{order.orderId}</td>
                        <td>{order.product}</td>
-                       <td>{order.date}</td>
+                       <td>{order.date.substring(0,10)}</td>
                        <td>{order.status}</td>
                        {order.status==="RELEASE"&&<td><button onClick={()=>releaseHandler(order.orderId)}>DELIVERED</button></td>}
                        {order.status==="DELIVERED"&&<td><button onClick={()=>releaseHandler(order.orderId)}>UPDATE PHOTO</button></td>}

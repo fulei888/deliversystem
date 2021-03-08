@@ -6,12 +6,17 @@ const DeliveredPayTable = (props) => {
 
         let deliveredArr = [];
           for(let order of arr) {
-               if(order.status=="DELIVERED") {
+               if(order.status==="DELIVERED") {
                    deliveredArr.push(order.orderId);
                }
           }
            //window.alert("Delivered orders' id are\n" + deliveredArr.join('\n'));
-          setOrderDetail(deliveredArr.join('/ '));
+          if(!orderDetail) {
+           setOrderDetail(deliveredArr.join('/ '));
+          }
+          else {
+              setOrderDetail();
+          }
    
        }
     return (

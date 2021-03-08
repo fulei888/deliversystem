@@ -73,7 +73,7 @@ const CartScreen = (props) => {
                                     <td>{order.street}</td>
                                     <td>{order.orderId}</td>
                                     <td>{order.product}</td>
-                                    <td>{order.date}</td>
+                                    <td>{order.date.substring(0,10)}</td>
                                     <td><button onClick = {()=>deleteHandler(order.orderId)}>DELETE</button></td>
                                 </tr>
                             )}
