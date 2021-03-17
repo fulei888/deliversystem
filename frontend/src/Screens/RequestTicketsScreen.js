@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {getTickets} from '../Actions/ordersAction';
 import TicketsRow from '../Components/ticketsTable';
-import {acceptOrder,rejectOrder} from '../Actions/ordersAction';
+
 
 const RequestTickestsScreen = () => {
     const allTickets = useSelector(state => state.getTickets);
     const {tickets, loading} = allTickets;
+    console.log( 'driver ticktest',tickets);
     const dispatch = useDispatch();
     useEffect(()=>{
             dispatch(getTickets())
@@ -33,6 +34,8 @@ const RequestTickestsScreen = () => {
                      tickets && tickets.map && tickets.map(ticket=>
                         ticket.ordersItems&&ticket.ordersItems.map(order => 
                             <TicketsRow 
+                            driverCity={ticket.userInfo.city}
+                            driverName={ticket.userInfo.name}
                             userId = {ticket.userId} 
                             key = {order._id+'Loren'}
                             city = {order.city}

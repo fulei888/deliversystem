@@ -7,6 +7,7 @@ export const signin = (email, password) => async (dispatch) => {
     try{
         const {data} = await Axios.post("/api/user/signin", {email, password})
         dispatch({type: USER_SIGNIN_SUCCESS, payload: data});
+        console.log('user information',data);
         dispatch(getYourTickets());
         Cookie.set('userInfo', JSON.stringify(data), {expires: 0.1});
     }

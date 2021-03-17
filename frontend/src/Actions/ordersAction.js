@@ -85,6 +85,7 @@ export const getAllOrderList = (
 export const placeOrders = (infor, router) => (dispatch, getState) => {
     console.log("placeorder");
     const{userSignin: {userInfo}} = getState();
+    console.log('userSigin infor', userInfo);
     dispatch({type:PLACE_ORDERS_REQUEST});
     console.log("infor", infor);
 

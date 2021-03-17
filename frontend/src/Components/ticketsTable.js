@@ -14,6 +14,8 @@ const TicketsTable = (props) => {
     const [orderId, setOrderId] = useState(props.orderId)
     const [date, setDate] = useState(props.date)
     const [product, setProduct] = useState(props.product)
+    const [driverCity, setDriverCity] = useState(props.driverCity)
+    const [driverName, setDriverName] = useState(props.driverName)
     const [deliveredImage, setDeliveredImage] = useState();
     const [showing, setShowing] = useState(false);
     const [imagePath, setImagePath] = useState();
@@ -71,8 +73,8 @@ const TicketsTable = (props) => {
          <Fragment>
             {remove? null :<tr>
                 <td>{userId}</td>
-                <td>name</td>
-                <td>city</td>
+                <td>{driverName}</td>
+                <td>{driverCity}</td>
                 <td>{city}</td>
                 <td>{orderId}</td>
                 <td>{date}</td>
@@ -81,10 +83,10 @@ const TicketsTable = (props) => {
                
                 <td><button className="myButton" onClick={()=>acceptHandler(userId, orderId)}>ACCEPT</button></td>
                 <td><button className="rejectButton" onClick={()=>rejectHandler(userId, orderId)}>REJECT</button></td>
-                {status==="ACCEPT"&&<td><button class="releaseButton" onClick={()=>releaseHandler(userId, orderId)}>RELEASE</button></td>}
-                {status==="DELIVERED"&&<td>{deliveredImage}<button class="deliverCheckButton" onClick={()=>checkImageHandler(props.imagePath)}>DELIVERED CHECK</button></td>}
+                {status==="ACCEPT"&&<td><button className="releaseButton" onClick={()=>releaseHandler(userId, orderId)}>RELEASE</button></td>}
+                {status==="DELIVERED"&&<td>{deliveredImage}<button className="deliverCheckButton" onClick={()=>checkImageHandler(props.imagePath)}>DELIVERED CHECK</button></td>}
                 
-                {(status==="DELIVERED")&&<td><button class="deleteButton" onClick={()=>deletetHandler(userId, orderId)}>DELETE</button></td>}
+                {(status==="DELIVERED")&&<td><button className="deleteButton" onClick={()=>deletetHandler(userId, orderId)}>DELETE</button></td>}
            
                 <td>
                     <PopupModal show = {showing} closeModal = {closeModalHandler}>

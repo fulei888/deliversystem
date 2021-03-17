@@ -328,7 +328,12 @@ ordersRouter.post("/placeorders", isAuth, expressAsyncHandler(async(req,res)=>{
     //if the user already had placeorders, we update it.
     //if the user does not have placeorders, we created it for him.
     const userTickets = await personalOrders.find({userId: req.user._id}).catch(e => { console.log(e) });
- 
+    console.log('userInfo', req.user);
+    const userInfo = {...req.user};
+            delete userInfo.iat;
+            delete userInfo.exp;
+            delete userInfo._id;
+            console.log('after userinfo', userInfo);
     if(userTickets&&userTickets.length!==0) {
         let arr = [...userTickets[0].ordersItems,...cartItems];
         const seen = new Set();
@@ -339,6 +344,7 @@ ordersRouter.post("/placeorders", isAuth, expressAsyncHandler(async(req,res)=>{
           });
          
         userTickets[0].ordersItems= filteredArr;
+        userTickets[0].userInfo = userInfo;
         const personalTickets = await userTickets[0].save().catch(e => { console.log(e) });
         console.log('personalTickets',personalTickets);
         if(personalTickets&&repeatedOrdersArr.length>0){
@@ -352,6 +358,7 @@ ordersRouter.post("/placeorders", isAuth, expressAsyncHandler(async(req,res)=>{
             const personalOrder = new personalOrders({
                 ordersItems:cartItems,
                 userId: req.user._id,
+                userInfo: userInfo
             })
             const newPersonalOrder = await personalOrder.save().catch(e => { console.log(e) });
             if (newPersonalOrder) {

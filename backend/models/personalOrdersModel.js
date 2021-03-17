@@ -13,12 +13,22 @@ const ordersSchema = new mongoose.Schema({
     imagePath: {type:String}
 }
 );
+const usersSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true, dropDups: true },
+    isAdmin: { type: Boolean, required: true, default: false },
+    street: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    cardNumber: { type: Number, required: true}
+  }
+);
 
 const personalOrdersSchema = new mongoose.Schema({
    ordersItems:[ordersSchema],
     userId: {type:mongoose.Schema.Types.ObjectId,
-    ref:'Users', required:true, unique: true, dropDups: true }
-   
+    ref:'Users', required:true, unique: true, dropDups: true },
+    userInfo:usersSchema
 },
 {
     timestamps: true
