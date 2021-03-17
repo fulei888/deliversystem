@@ -41,7 +41,7 @@ const CartScreen = (props) => {
         {!cartItems&& <p> Loading </p>}
           {cartItems &&cartItems.length===0?<div>No Order In the Cart</div>
                 :<div>
-                        <button onClick = {checkoutHandler}>Confirm</button>
+                        <button className="myButton" onClick = {checkoutHandler}>Confirm</button>
                         <table>
                         <thead>
                             <tr>
@@ -74,7 +74,7 @@ const CartScreen = (props) => {
                                     <td>{order.orderId}</td>
                                     <td>{order.product}</td>
                                     <td>{order.date.substring(0,10)}</td>
-                                    <td><button onClick = {()=>deleteHandler(order.orderId)}>DELETE</button></td>
+                                    <td><button className="deleteButton" onClick = {()=>deleteHandler(order.orderId)}>DELETE</button></td>
                                 </tr>
                             )}
                         </tbody>

@@ -68,27 +68,24 @@ const OrdersScreen = (props) => {
     return (
         <div className="ordersScreen">
             <h2>All Orders</h2>
-            <button onClick={filterShowHandler}>Filter</button>
+            <button className = "filterButton" onClick={filterShowHandler}>Filter</button>
             <table>
                 <thead>
                     <tr className={filterClass}>
                         <td>
-                            <input type="text" name="state" onChange={e=>setStateSearch(e.target.value)} />
+                            <input type="text" name="state" value={stateSearch} onChange={e=>setStateSearch(e.target.value)} />
                         </td>
                         <td>
-                            <input type="text" name="city" onChange={e=>setCitySearch(e.target.value)} />
+                            <input type="text" name="city" value={citySearch} onChange={e=>setCitySearch(e.target.value)} />
                         </td>
                         <td>
-                            <input type="text" name="street" onChange={e=>setStreetSearch(e.target.value)} />
+                            <input type="text" name="street" value={streetSearch} onChange={e=>setStreetSearch(e.target.value)} />
                         </td>
                         <td>
-                            <input type="text" name="orderNumber" onChange={e=>setOrderNumberSearch(e.target.value)} />
+                            <input type="text" name="orderNumber" value={orderNumberSearch} onChange={e=>setOrderNumberSearch(e.target.value)} />
                         </td>
                         <td>
-                          
-                        </td>
-                        <td>
-                            <input type="text" name="createdDate" onChange={e=>setCreatedDateSearch(e.target.value)}/>
+                            <input type="text" name="createdDate" value={createdDateSearch} onChange={e=>setCreatedDateSearch(e.target.value)}/>
                         </td>
                     </tr>
                     <tr>
@@ -116,9 +113,6 @@ const OrdersScreen = (props) => {
                         }}>                            
                             Order Number
                         </th>
-                        <th>
-                            Product
-                        </th>
                         <th onClick={()=>{
                             setCreatedDateSort(prev => ({ascending:!prev.ascending}));
                             setCreatedDateSortClicked(true);
@@ -134,10 +128,9 @@ const OrdersScreen = (props) => {
                             <td>{order.city}</td>
                             <td>{order.street}</td>
                             <td>{order.ordernumber}</td>
-                            <td>{order.product}</td>
                             <td>{order.updatedAt.substring(0,10)}</td>
                             <td>{order.show}</td>
-                            <td><button onClick = {()=>{takeHandler(order._id)}}>TAKE IT</button></td>
+                            <td><button className="myButton" onClick = {()=>{takeHandler(order._id)}}>TAKE IT</button></td>
                         </tr>
                         
                     )}

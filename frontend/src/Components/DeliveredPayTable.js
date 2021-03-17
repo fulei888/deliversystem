@@ -25,7 +25,7 @@ const DeliveredPayTable = (props) => {
                 <td>{props.userId}</td>
                 <td>useName</td>
                 <td onClick={()=>showTicketsHandler(props.arr)}>{props.arr.length}</td>
-                <td><button>Pay</button></td>
+                <td><button className="myButton">Pay</button></td>
                 <td>{orderDetail}</td>
             </tr>  
                             

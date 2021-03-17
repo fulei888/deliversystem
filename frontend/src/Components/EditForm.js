@@ -52,9 +52,9 @@ const EditForm = ({modalVisable, submitHanlder,saveLoading,saveError}) => {
                         />
                     </li>
                     <li>
-                        <button type="submit" className="button primary"
+                        <button type="submit" className="button myButton primary"
                         >Submit</button>
-                        <button type="button" className="back button primary" onClick={()=> {setModalVisable(false)}}
+                        <button type="button" className="back button myButton primary" onClick={()=> {setModalVisable(false)}}
                         >Back</button>
                     </li>
                 </ul>

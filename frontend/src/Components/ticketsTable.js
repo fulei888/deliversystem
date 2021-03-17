@@ -79,12 +79,12 @@ const TicketsTable = (props) => {
                 <td>{product}</td>
                 <td>{status}</td>
                
-                <td><button onClick={()=>acceptHandler(userId, orderId)}>ACCEPT</button></td>
-                <td><button onClick={()=>rejectHandler(userId, orderId)}>REJECT</button></td>
-                {status==="ACCEPT"&&<td><button onClick={()=>releaseHandler(userId, orderId)}>RELEASE</button></td>}
-                {status==="DELIVERED"&&<td>{deliveredImage}<button onClick={()=>checkImageHandler(props.imagePath)}>DELIVERED CHECK</button></td>}
+                <td><button className="myButton" onClick={()=>acceptHandler(userId, orderId)}>ACCEPT</button></td>
+                <td><button className="rejectButton" onClick={()=>rejectHandler(userId, orderId)}>REJECT</button></td>
+                {status==="ACCEPT"&&<td><button class="releaseButton" onClick={()=>releaseHandler(userId, orderId)}>RELEASE</button></td>}
+                {status==="DELIVERED"&&<td>{deliveredImage}<button class="deliverCheckButton" onClick={()=>checkImageHandler(props.imagePath)}>DELIVERED CHECK</button></td>}
                 
-                {(status==="DELIVERED")&&<td><button onClick={()=>deletetHandler(userId, orderId)}>DELETE</button></td>}
+                {(status==="DELIVERED")&&<td><button class="deleteButton" onClick={()=>deletetHandler(userId, orderId)}>DELETE</button></td>}
            
                 <td>
                     <PopupModal show = {showing} closeModal = {closeModalHandler}>
