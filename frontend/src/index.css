@@ -6,7 +6,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+ul {
+  list-style-type: none;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -478,4 +480,62 @@ input {
 .releaseButton:active {
 	position:relative;
 	top:1px;
+}
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  transition: all .5s;
+  transform: translate(-300rem);
+  width:60%;
+  background-color: #f0f0f0;
+  height:100%;
+  top:0;
+  left:0;
+  display:flex;
+  justify-content: flex-start;
+}
+.sidebar.open {
+  transform: translateX(0);
+  opacity: 1;
+  z-index: 500;
+}
+.closeSign {
+  position:fixed;
+  right:0;
+  margin:1rem;
+  color: grey;
+}
+
+@media (min-width: 500px) {
+.sideDrawerButton {
+  display: none;
+}
+}
+@media (max-width: 499px) {
+  .userName {
+    display: none;
+  }
+  .home{
+    display: none;
+  }
+  .logoName {
+    font-size:2rem!important;
+  }
+  .yourTickets > button {
+    width:80%
+  }
+  .sideDrawerButton {
+    font-size:2rem;
+    color:white;
+    padding: .5rem;
+    background: none;
+    border:none;
+    cursor: pointer;
+  }
+  .sidebar a{
+    text-decoration: none;
+  }
+  .sidebar li{
+    margin:1rem;
+  }
 }

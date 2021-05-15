@@ -118,7 +118,7 @@ const RegisterScreen =(props) => {
                     <label htmlFor="name">
                         Name
                     </label>
-                    <input type="name" name = "name" id="name" 
+                    <input type="name" name = "name" id="name" value={name}
                     onChange={(e) => setName(e.target.value)}>
                     </input>
                 </li>
@@ -126,40 +126,40 @@ const RegisterScreen =(props) => {
                     <label htmlFor="email">
                         Email
                     </label>
-                    <input type="email" name = "email" id="email" 
+                    <input type="email" name = "email" id="email" value={email}
                     onChange={(e) => setEmail(e.target.value)}>
                     </input>
                 </li>
                 <li>
                     <label htmlFor = "password">Password</label>
-                    <input type="password" id="password" name="password"
+                    <input type="password" id="password" name="password" value={password}
                     onChange={(e) => setPassword(e.target.value)}></input>
                 </li>
                 <li>
                     <label htmlFor = "repassword">Password</label>
-                    <input type="password" id="repassword" name="repassword"
+                    <input type="password" id="repassword" name="repassword" value={repassword}
                     onChange={(e) => setRepassword(e.target.value)}></input>
                 </li>
                 <li>
                     <label htmlFor = "cardnumber">Credit/Debit Card Number</label>
-                    <input type="number" id="cardnumber" name="cardnumber"
+                    <input type="number" id="cardnumber" name="cardnumber" value={cardNumber}
                     onChange={(e) => setCardNumber(e.target.value)}></input>
                 </li>
                 <li>
                     <label htmlFor = "street">Street</label>
-                    <input type="text" id="street" name="street"
+                    <input type="text" id="street" name="street" value={street}
                     onChange={(e) => setStreet(e.target.value)}></input>
                 </li>
                 <li>
                     <label htmlFor = "city">City</label>
-                    <input type="text" id="city" name="city"
+                    <input type="text" id="city" name="city" value={city}
                     onChange={(e) => setCity(e.target.value)}></input>
                 </li>
                 <li>
                     <label htmlFor = "state">State</label>
                     {/* <input type="text" id="state" name="state"
                     onChange={(e) => setState(e.target.value)}></input> */}
-                    <select id="state" name="state" onChange={(e) => setState(e.target.value)}>
+                    <select id="state" name="state" value={state} onChange={(e) => setState(e.target.value)}>
                         <option value="">--Please choose an option--</option>
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>

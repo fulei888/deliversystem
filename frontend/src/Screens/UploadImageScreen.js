@@ -79,7 +79,7 @@ const UploadImageScreen = (props) => {
                     />
                     {loadingUpload && <div>Loading</div>}
                     {errorUpload && <div>error upload</div>}
-                    <button onClick={deliverSuccessHandler}>Delivered Successfully</button>
+                    <button className ="myButton" onClick={deliverSuccessHandler}>Delivered Successfully</button>
             </div>
             }
         </div>

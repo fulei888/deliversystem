@@ -80,7 +80,7 @@ const SigninScreen =(props) => {
                     <button type="submit" className="button primary">Sign In</button>
                 </li>
                 <li>
-                    New to amazona?
+                    Need A Account?
                 </li>
                 <li>
                     <Link to ={redirect === "/"? "register": "register?redirect="+ redirect} className="button secondary full-width">Create your account</Link>

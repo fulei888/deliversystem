@@ -17,10 +17,10 @@ const usersSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true, dropDups: true },
     isAdmin: { type: Boolean, required: true, default: false },
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    cardNumber: { type: Number, required: true}
+    street: { type: String },
+    city: { type: String},
+    state: { type: String },
+    cardNumber: { type: Number}
   }
 );
 
